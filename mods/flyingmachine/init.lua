@@ -274,8 +274,8 @@ minetest.register_craftitem("flyingmachine:controller", {
 		return itemstack
 	end,
 })
-minetest.register_craft("flyingmachine:controller", {
-	{"default:wood","default:wood","default:wood"}
-	{"default:mese_crystal","default:diamond","default:mese_crystal"}
-	{"default:steel:ingot","default:steel:ingot","default:steel:ingot"}
-})
+--minetest.register_craft("flyingmachine:controller", {
+	--{"default:wood","default:wood","default:wood"}
+	--{"default:mese_crystal","default:diamond","default:mese_crystal"}
+	--{"default:steel:ingot","default:steel:ingot","default:steel:ingot"}
+--})
