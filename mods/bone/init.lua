@@ -8,7 +8,7 @@ minetest.register_node(":default:dirt", {
 		items = {
 			{
 				items = {'bone:bone', 'default:dirt'},
-				rarity = 50,
+				rarity = 30,
 			},
 			{
 				items = {'default:dirt'},
@@ -29,7 +29,7 @@ minetest.register_node(":default:dirt_with_grass", {
 		items = {
 			{
 				items = {'bone:bone', 'default:dirt'},
-				rarity = 50,
+				rarity = 30,
 			},
 			{
 				items = {'default:dirt'},
@@ -39,6 +39,92 @@ minetest.register_node(":default:dirt_with_grass", {
 	sounds = default.node_sound_dirt_defaults({
 		footstep = {name="default_grass_footstep", gain=0.4},
 	}),
+})
+
+--additional nodes from skylands
+minetest.register_node(":skylands:rich_dirt", {
+	description = "Rich Dirt",
+	tiles = {"skylands_rich_dirt.png"},
+	is_ground_content = true,
+	groups = {crumbly=3,soil=1},
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {'bone:bone', 'skylands:rich_dirt'},
+				rarity = 50,
+			},
+			{
+				items = {'skylands:rich_dirt'},
+			}
+		}
+	},
+	sounds = default.node_sound_dirt_defaults(),
+})
+
+minetest.register_node(":skylands:icydirt", {
+	description = "Icy Dirt",
+	tiles = {"skylands_icydirt.png", "default_dirt.png", "default_dirt.png^skylands_icydirt_side.png"},
+	is_ground_content = false,
+	groups = {crumbly=1},
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {'bone:bone', 'default:dirt'},
+				rarity = 20,
+			},
+			{
+				items = {'default:dirt'},
+			}
+		}
+	},
+	sounds = default.node_sound_dirt_defaults({
+		footstep = {name="default_snow_footstep", gain=0.15},
+		dug = {name="default_snow_footstep", gain=0.45},
+	}),
+})
+
+minetest.register_node(":skylands:drygrass", {
+	description = "Dry Grass",
+	tiles = {"skylands_drygrass.png", "default_dirt.png", "default_dirt.png^skylands_drygrass_side.png"},
+	is_ground_content = false,
+	groups = {crumbly=1,soil=1},
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {'bone:bone', 'default:dirt'},
+				rarity = 20,
+			},
+			{
+				items = {'default:dirt'},
+			}
+		}
+	},
+	sounds = default.node_sound_dirt_defaults({
+		footstep = {name="default_grass_footstep", gain=0.4},
+	}),
+})
+
+minetest.register_node(":skylands:permafrost", {
+	description = "Permafrost",
+	tiles = {"skylands_permafrost.png"},
+	is_ground_content = false,
+	groups = {crumbly=1},
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {'bone:bone', 'default:dirt'},
+				rarity = 25,
+			},
+			{
+				items = {'default:dirt'},
+			}
+		}
+	},
+	sounds = default.node_sound_dirt_defaults(),
 })
 
 

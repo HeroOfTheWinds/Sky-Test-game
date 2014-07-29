@@ -6,6 +6,7 @@ local LIQUID_MAX = 8  --The number of water levels when liquid_finite is enabled
 minetest.register_alias("bucket", "bucket:bucket_empty")
 minetest.register_alias("bucket_water", "bucket:bucket_water")
 minetest.register_alias("bucket_lava", "bucket:bucket_lava")
+minetest.register_alias("bucket_spring", "bucket:bucket_spring")
 
 minetest.register_craft({
 	output = 'bucket:bucket_empty 1',
@@ -173,6 +174,14 @@ bucket.register_liquid(
 	"bucket:bucket_lava",
 	"bucket_lava.png",
 	"Lava Bucket"
+)
+
+bucket.register_liquid(
+	"skylands:spring",
+	"skylands:spring_flowing",
+	"bucket:bucket_spring",
+	"bucket_spring.png",
+	"Healing Spring Bucket"
 )
 
 minetest.register_craft({
