@@ -126,10 +126,9 @@ local np_humid = {
 skylands = {}
 
 dofile(minetest.get_modpath("skylands").."/nodes.lua")
+dofile(minetest.get_modpath("skylands").."/stairs.lua")
 if (minetest.get_modpath("moreblocks")) then
 	dofile(minetest.get_modpath("skylands").."/stairsplus.lua")
-else
-	dofile(minetest.get_modpath("skylands").."/stairs.lua")
 end
 dofile(minetest.get_modpath("skylands").."/wheat.lua")
 dofile(minetest.get_modpath("skylands").."/abms.lua")
