@@ -93,15 +93,11 @@ minetest.register_node(nodename, {
 			"button[7.5,0.2;1.5,3;brsflop;RS-Flop]"..
 			"button_exit[3.5,1;2,3;program;Program]")
 		meta:set_string("infotext", "Unprogrammed Microcontroller")
-		meta:set_int("heat", 0)
 		local r = ""
 		for i=1, EEPROM_SIZE+1 do r=r.."0" end --Generate a string with EEPROM_SIZE*"0"
 		meta:set_string("eeprom", r)
 	end,
 	on_receive_fields = function(pos, formanme, fields, sender)
-		if fields.quit then
-			return
-		end
 		local meta = minetest.get_meta(pos)
 		if fields.band then
 			fields.code = "sbi(C, A&B) :A and B are inputs, C is output"
@@ -115,8 +111,8 @@ minetest.register_node(nodename, {
 			fields.code = "if(A)sbi(1,1);if(!A&#1)sbi(B,!B)sbi(1,0); if(C)off(B,1); :A is input, B is output (Q), C is reset, toggles with falling edge"
 		elseif fields.brsflop then
 			fields.code = "if(A)on(C);if(B)off(C); :A is S (Set), B is R (Reset), C is output (R dominates)"
-		elseif fields.program or fields.code then --nothing
-		else return nil end
+		end
+		if fields.code == nil then return end
 
 		meta:set_string("code", fields.code)
 		meta:set_string("formspec", "size[9,2.5]"..
@@ -156,7 +152,6 @@ minetest.register_craft({
 function yc_reset(pos)
 	yc_action(pos, {a=false, b=false, c=false, d=false})
 	local meta = minetest.get_meta(pos)
-	meta:set_int("heat", 0)
 	meta:set_int("afterid", 0)
 	local r = ""
 	for i=1, EEPROM_SIZE+1 do r=r.."0" end --Generate a string with EEPROM_SIZE*"0"
@@ -165,11 +160,12 @@ end
 
 function update_yc(pos)
 	local meta = minetest.get_meta(pos)
-	yc_heat(meta)
-	--minetest.after(0.5, yc_cool, meta)
-	if (yc_overheat(meta)) then
+
+	if (mesecon.do_overheat(pos)) then
 		minetest.remove_node(pos)
-		minetest.after(0.2, yc_overheat_off, pos) --wait for pending parsings
+		minetest.after(0.2, function (pos)
+			mesecon:receptor_off(pos, mesecon.rules.flat)
+		end , pos) -- wait for pending parsings
 		minetest.add_item(pos, "mesecons_microcontroller:microcontroller0000")
 	end
 
@@ -697,35 +693,4 @@ function yc_merge_portstates(Lreal, Lvirtual)
 	if Lvirtual.c or Lreal.c then L.c = true end
 	if Lvirtual.d or Lreal.d then L.d = true end
 	return L
-end
-
---"Overheat" protection
-function yc_heat(meta)
-	h = meta:get_int("heat")
-	if h ~= nil then
-		meta:set_int("heat", h + 1)
-	end
-end
-
---function yc_cool(meta)
---	h = meta:get_int("heat")
---	if h ~= nil then
---		meta:set_int("heat", h - 1)
---	end
---end
-
-function yc_overheat(meta)
-	if MESECONS_GLOBALSTEP then return false end
-	h = meta:get_int("heat")
-	if h == nil then return true end -- if nil the overheat
-	if h>60 then 
-		return true
-	else 
-		return false 
-	end
-end
-
-function yc_overheat_off(pos)
-	rules = mesecon:get_rules("mesecons_microcontroller:microcontroller1111")
-	mesecon:receptor_off(pos, rules)
 end

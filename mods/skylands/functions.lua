@@ -191,6 +191,10 @@ function skylands:remplant(x, y, z, area, data)
 	local c_dry_shrub = minetest.get_content_id("default:dry_shrub")
 	local c_golgrass = minetest.get_content_id("skylands:goldengrass")
 	local c_jungrass = minetest.get_content_id("default:junglegrass")
+	local c_potato = minetest.get_content_id("farming:potato_3")
+	local c_carrot = minetest.get_content_id("farming:carrot_7")
+	local c_tomato = minetest.get_content_id("farming:tomato_7")
+	local c_cucumber = minetest.get_content_id("farming:cucumber_4")
 	local c_air = minetest.get_content_id("air")
 	local c_water = minetest.get_content_id("default:water_source")
 	for j = 1, 7 do
@@ -216,7 +220,11 @@ function skylands:remplant(x, y, z, area, data)
 		or data[vi] == c_geranium
 		or data[vi] == c_viola
 		or data[vi] == c_cactus
-		or data[vi] == c_dry_shrub then
+		or data[vi] == c_dry_shrub 
+		or data[vi] == c_potato
+		or data[vi] == c_carrot
+		or data[vi] == c_tomato
+		or data[vi] == c_cucumber then
 			data[vi] = c_air
 		end
 	end
@@ -245,7 +253,11 @@ function skylands:remplant(x, y, z, area, data)
 		or data[vi] == c_geranium
 		or data[vi] == c_viola
 		or data[vi] == c_cactus
-		or data[vi] == c_dry_shrub then
+		or data[vi] == c_dry_shrub
+		or data[vi] == c_potato
+		or data[vi] == c_carrot
+		or data[vi] == c_tomato
+		or data[vi] == c_cucumber then
 			data[vi] = c_air
 		end
 	end

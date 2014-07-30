@@ -1,42 +1,58 @@
 -- Crafting
 
 minetest.register_craft({
-	output = "default:stick 1",
+	output = "default:stick",
+	recipe = {{"default:dry_shrub"},}
+})
+
+minetest.register_craft({
+	output = "default:stick",
+	recipe = {{"default:sapling"},}
+})
+
+minetest.register_craft({
+	output = "default:stick",
+	recipe = {{"default:junglesapling"},}
+})
+
+minetest.register_craft({
+	output = "default:wood",
 	recipe = {
-		{"default:dry_shrub"},
+		{"default:stick", "default:stick"},
+		{"default:stick", "default:stick"},
 	}
 })
 
 minetest.register_craft({
-	output = "default:dirt_with_grass 1",
+	output = "default:junglewood",
 	recipe = {
-		{"default:junglegrass"},
-		{"default:dirt"},
+		{"moreblocks:jungle_stick", "moreblocks:jungle_stick"},
+		{"moreblocks:jungle_stick", "moreblocks:jungle_stick"},
 	}
 })
 
 minetest.register_craft({
-	output = "default:dirt_with_grass 1",
-	recipe = {
-		{"default:mese"},
-		{"default:dirt"},
-	}
+	output = "default:dirt_with_grass",
+	type = "shapeless",
+	recipe = {"default:junglegrass", "default:dirt"},
 })
 
 minetest.register_craft({
-	output = "default:mossycobble 1",
-	recipe = {
-		{"default:junglegrass"},
-		{"default:cobble"},
-	}
+	output = "default:dirt_with_grass",
+	type = "shapeless",
+	recipe = {"default:mese", "default:dirt"},
 })
 
 minetest.register_craft({
-	output = "default:mossycobble 1",
-	recipe = {
-		{"default:mese"},
-		{"default:cobble"},
-	}
+	output = "default:mossycobble",
+	type = "shapeless",
+	recipe = {"default:junglegrass", "default:cobble"},
+})
+
+minetest.register_craft({
+	output = "default:mossycobble",
+	type = "shapeless",
+	recipe = {"default:mese_crystal_fragment", "default:cobble"},
 })
 
 minetest.register_craft({
@@ -49,10 +65,8 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "moreblocks:wood_tile_flipped 1",
-	recipe = {
-		{"moreblocks:wood_tile"},
-	}
+	output = "moreblocks:wood_tile_flipped",
+	recipe = {{"moreblocks:wood_tile"},}
 })
 
 minetest.register_craft({
@@ -73,7 +87,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "moreblocks:wood_tile_up 1",
+	output = "moreblocks:wood_tile_up",
 	recipe = {
 		{"default:stick"},
 		{"moreblocks:wood_tile_center"},
@@ -81,7 +95,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "moreblocks:wood_tile_down 1",
+	output = "moreblocks:wood_tile_down",
 	recipe = {
 		{"moreblocks:wood_tile_center"},
 		{"default:stick"},
@@ -89,14 +103,14 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "moreblocks:wood_tile_left 1",
+	output = "moreblocks:wood_tile_left",
 	recipe = {
 		{"default:stick", "moreblocks:wood_tile_center"},
 	}
 })
 
 minetest.register_craft({
-	output = "moreblocks:wood_tile_right 1",
+	output = "moreblocks:wood_tile_right",
 	recipe = {
 		{"moreblocks:wood_tile_center", "default:stick"},
 	}
@@ -104,9 +118,7 @@ minetest.register_craft({
 
 minetest.register_craft({
 	output = "moreblocks:junglestick 4",
-	recipe = {
-		{"default:junglewood"},
-	}
+	recipe = {{"default:junglewood"},}
 })
 
 minetest.register_craft({
@@ -145,7 +157,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "moreblocks:sweeper 3",
+	output = "moreblocks:sweeper 4",
 	recipe = {
 		{"default:junglegrass"},
 		{"default:stick"},
@@ -161,22 +173,39 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "moreblocks:split_stone_tile 1",
+	output = "moreblocks:split_stone_tile",
 	recipe = {
 		{"moreblocks:stone_tile"},
 	}
 })
 
 minetest.register_craft({
-	output = "moreblocks:empty_bookshelf 1",
+	output = "moreblocks:split_stone_tile_alt",
 	recipe = {
-		{"moreblocks:sweeper"},
-		{"default:bookshelf"},
+		{"moreblocks:split_stone_tile"},
 	}
 })
 
 minetest.register_craft({
-	output = "moreblocks:coal_stone_bricks 1",
+	output = "moreblocks:grey_bricks 2",
+	type = "shapeless",
+	recipe =  {"default:stone", "default:brick"},
+})
+
+minetest.register_craft({
+	output = "moreblocks:grey_bricks 2",
+	type = "shapeless",
+	recipe =  {"default:stonebrick", "default:brick"},
+})
+
+minetest.register_craft({
+	output = "moreblocks:empty_bookshelf",
+	type = "shapeless",
+	recipe = {"moreblocks:sweeper", "default:bookshelf"},
+})
+
+minetest.register_craft({
+	output = "moreblocks:coal_stone_bricks 4",
 	recipe = {
 		{"moreblocks:coal_stone", "moreblocks:coal_stone"},
 		{"moreblocks:coal_stone", "moreblocks:coal_stone"},
@@ -184,7 +213,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "moreblocks:iron_stone_bricks 1",
+	output = "moreblocks:iron_stone_bricks 4",
 	recipe = {
 		{"moreblocks:iron_stone", "moreblocks:iron_stone"},
 		{"moreblocks:iron_stone", "moreblocks:iron_stone"},
@@ -240,81 +269,140 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "default:chest_locked 1",
+	output = "default:chest_locked",
 	type = "shapeless",
 	recipe = {"default:steel_ingot", "default:chest"},
 })
+minetest.register_craft({
+	output = "default:chest_locked",
+	type = "shapeless",
+	recipe = {"default:copper_ingot", "default:chest"},
+})
 
 minetest.register_craft({
-	output = "moreblocks:iron_glass 1",
+	output = "default:chest_locked",
+	type = "shapeless",
+	recipe = {"default:bronze_ingot", "default:chest"},
+})
+
+minetest.register_craft({
+	output = "default:chest_locked",
+	type = "shapeless",
+	recipe = {"default:gold_ingot", "default:chest"},
+})
+
+minetest.register_craft({
+	output = "moreblocks:iron_glass",
 	type = "shapeless",
 	recipe = {"default:steel_ingot", "default:glass"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:coal_glass 1",
+	output = "default:glass",
+	type = "shapeless",
+	recipe = {"default:coal_lump", "moreblocks:iron_glass"},
+})
+
+
+minetest.register_craft({
+	output = "moreblocks:coal_glass",
 	type = "shapeless",
 	recipe = {"default:coal_lump", "default:glass"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:clean_glass 1",
+	output = "default:glass",
+	type = "shapeless",
+	recipe = {"default:steel_ingot", "moreblocks:coal_glass"},
+})
+
+minetest.register_craft({
+	output = "moreblocks:clean_glass",
 	type = "shapeless",
 	recipe = {"moreblocks:sweeper", "default:glass"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:glow_glass 1",
+	output = "moreblocks:glow_glass",
 	type = "shapeless",
 	recipe = {"default:torch", "default:glass"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:trap_glow_glass 1",
+	output = "moreblocks:trap_glow_glass",
 	type = "shapeless",
-	walkable = false,
-	recipe = {"default:mese_crystal", "default:glass", "default:torch"},
+	recipe = {"default:mese_crystal_fragment", "default:glass", "default:torch"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:super_glow_glass 1",
+	output = "moreblocks:trap_glow_glass",
+	type = "shapeless",
+	recipe = {"default:mese_crystal_fragment", "moreblocks:glow_glass"},
+})
+
+minetest.register_craft({
+	output = "moreblocks:super_glow_glass",
 	type = "shapeless",
 	recipe = {"default:torch", "default:torch", "default:glass"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:trap_super_glow_glass 1",
+	output = "moreblocks:super_glow_glass",
 	type = "shapeless",
-	walkable = false,
-	recipe = {"default:mese_crystal", "default:glass", "default:torch", "default:torch"},
+	recipe = {"default:torch", "moreblocks:glow_glass"},
+})
+
+
+minetest.register_craft({
+	output = "moreblocks:trap_super_glow_glass",
+	type = "shapeless",
+	recipe = {"default:mese_crystal_fragment", "default:glass", "default:torch", "default:torch"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:coal_stone 1",
+	output = "moreblocks:trap_super_glow_glass",
+	type = "shapeless",
+	recipe = {"default:mese_crystal_fragment", "moreblocks:super_glow_glass"},
+})
+
+minetest.register_craft({
+	output = "moreblocks:coal_stone",
 	type = "shapeless",
 	recipe = {"default:coal_lump", "default:stone"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:iron_stone 1",
+	output = "default:stone",
 	type = "shapeless",
-	recipe = {"default:iron_lump", "default:stone"},
+	recipe = {"default:steel_ingot", "moreblocks:coal_stone"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:trap_stone 12",
+	output = "moreblocks:iron_stone",
 	type = "shapeless",
-	recipe = {"default:mese", "default:stone"},
+	recipe = {"default:steel_ingot", "default:stone"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:trap_glass 12",
+	output = "default:stone",
 	type = "shapeless",
-	recipe = {"default:mese", "default:glass"},
+	recipe = {"default:coal_lump", "moreblocks:iron_stone"},
 })
 
 minetest.register_craft({
-	output = "moreblocks:cactus_brick 1",
+	output = "moreblocks:trap_stone",
+	type = "shapeless",
+	recipe = {"default:mese_crystal_fragment", "default:stone"},
+})
+
+minetest.register_craft({
+	output = "moreblocks:trap_glass",
+	type = "shapeless",
+	recipe = {"default:mese_crystal_fragment", "default:glass"},
+})
+
+minetest.register_craft({
+	output = "moreblocks:cactus_brick",
 	type = "shapeless",
 	recipe = {"default:cactus", "default:brick"},
 })
@@ -336,7 +424,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "moreblocks:rope 2",
+	output = "moreblocks:rope 3",
 	recipe = {
 		{"default:junglegrass"},
 		{"default:junglegrass"},
@@ -345,10 +433,14 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-		output = "moreblocks:circular_saw 1", 
-		recipe = {
-				{ "",  "default:steel_ingot",  "" },
-				{ "default:tree",  "default:tree",  "default:tree"},
-				{ "default:tree",  "",  "default:tree"},
-		}
+	type = "cooking", output = "moreblocks:tar", recipe = "default:gravel",
+})
+
+minetest.register_craft({
+	output = "moreblocks:circular_saw", 
+	recipe = {
+		{ "",  "default:steel_ingot",  "" },
+		{ "group:wood",  "group:wood",  "group:wood"},
+		{ "group:wood",  "",  "group:wood"},
+	}
 })

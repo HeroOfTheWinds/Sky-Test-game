@@ -1,143 +1,122 @@
--- Load translation library if intllib is installed
-
-local S
-if (minetest.get_modpath("intllib")) then
-	dofile(minetest.get_modpath("intllib").."/intllib.lua")
+local S -- Load translation library if intllib is installed:
+if intllib then
 	S = intllib.Getter(minetest.get_current_modname())
-	else
-	S = function ( s ) return s end
+else
+	S = function(s) return s end
 end
 
--- Node will be called <modname>micro_<subname>
+-- Node will be called <modname>:micro_<subname>
 
 function register_micro(modname, subname, recipeitem, groups, images, description, drop, light)
-
-	minetest.register_node(":"..modname .. ":micro_" .. subname, {
-		description = S("%s Microblock"):format(S(description)),
-		drawtype = "nodebox",
-		tiles = images,
-		light_source = light,
-		drop = modname .. ":micro_" .. drop,
-		paramtype = "light",
-		paramtype2 = "facedir",
-		sunlight_propagates = true,
+	return stairsplus:register_micro(modname, subname, recipeitem, {
 		groups = groups,
-		node_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, 0, 0, 0, 0.5},
-		},
-		sounds = default.node_sound_stone_defaults(),
-		on_place = stairsplus_rotate_and_place
-	})
-	
-	minetest.register_node(":"..modname .. ":micro_" .. subname .. "_1", {
-		description = S("%s Microblock"):format(S(description)),
-		drawtype = "nodebox",
 		tiles = images,
+		description = description,
+		drop = drop,
 		light_source = light,
-		drop = modname .. ":micro_" .. drop .. "_1",
-		paramtype = "light",
-		paramtype2 = "facedir",
-		sunlight_propagates = true,
-		groups = groups,
-		node_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, 0, 0, -0.4375, 0.5},
-		},
 		sounds = default.node_sound_stone_defaults(),
-		on_place = stairsplus_rotate_and_place
 	})
-	
-	minetest.register_node(":"..modname .. ":micro_" .. subname .. "_2", {
-		description = S("%s Microblock"):format(S(description)),
-		drawtype = "nodebox",
-		tiles = images,
-		light_source = light,
-		drop = modname .. ":micro_" .. drop .. "_2",
-		paramtype = "light",
-		paramtype2 = "facedir",
-		sunlight_propagates = true,
-		groups = groups,
-		node_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, 0, 0, -0.375, 0.5},
-		},
-		sounds = default.node_sound_stone_defaults(),
-		on_place = stairsplus_rotate_and_place
-	})
-	
-	minetest.register_node(":"..modname .. ":micro_" .. subname .. "_4", {
-		description = S("%s Microblock"):format(S(description)),
-		drawtype = "nodebox",
-		tiles = images,
-		light_source = light,
-		drop = modname .. ":micro_" .. drop .. "_4",
-		paramtype = "light",
-		paramtype2 = "facedir",
-		sunlight_propagates = true,
-		groups = groups,
-		node_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, 0, 0, -0.25, 0.5},
-		},
-		sounds = default.node_sound_stone_defaults(),
-		on_place = stairsplus_rotate_and_place
-	})
-	
-	minetest.register_node(":"..modname .. ":micro_" .. subname .. "_12", {
-		description = S("%s Microblock"):format(S(description)),
-		drawtype = "nodebox",
-		tiles = images,
-		light_source = light,
-		drop = modname .. ":micro_" .. drop .. "_12",
-		paramtype = "light",
-		paramtype2 = "facedir",
-		sunlight_propagates = true,
-		groups = groups,
-		node_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, 0, 0, 0.25, 0.5},
-		},
-		sounds = default.node_sound_stone_defaults(),
-		on_place = stairsplus_rotate_and_place
-	})
-	
-	minetest.register_node(":"..modname .. ":micro_" .. subname .. "_14", {
-		description = S("%s Microblock"):format(S(description)),
-		drawtype = "nodebox",
-		tiles = images,
-		light_source = light,
-		drop = modname .. ":micro_" .. drop .. "_14",
-		paramtype = "light",
-		paramtype2 = "facedir",
-		sunlight_propagates = true,
-		groups = groups,
-		node_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, 0, 0, 0.375, 0.5},
-		},
-		sounds = default.node_sound_stone_defaults(),
-		on_place = stairsplus_rotate_and_place
-	})
-	
-	minetest.register_node(":"..modname .. ":micro_" .. subname .. "_15", {
-		description = S("%s Microblock"):format(S(description)),
-		drawtype = "nodebox",
-		tiles = images,
-		light_source = light,
-		drop = modname .. ":micro_" .. drop .. "_15",
-		paramtype = "light",
-		paramtype2 = "facedir",
-		sunlight_propagates = true,
-		groups = groups,
-		node_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, 0, 0, 0.4375, 0.5},
-		},
-		sounds = default.node_sound_stone_defaults(),
-		on_place = stairsplus_rotate_and_place
-	})
-
-	minetest.register_alias(modname..":micro_"..subname.."_bottom", modname..":micro_"..subname)
 end
 
+function stairsplus:register_micro(modname, subname, recipeitem, fields)
+	local defs = {
+		[""] = {
+			node_box = {
+				type = "fixed",
+				fixed = {-0.5, -0.5, 0, 0, 0, 0.5},
+			},
+		},
+		["_1"] = {
+			node_box = {
+				type = "fixed",
+				fixed = {-0.5, -0.5, 0, 0, -0.4375, 0.5},
+			},
+		},
+		["_2"] = {
+			node_box = {
+				type = "fixed",
+				fixed = {-0.5, -0.5, 0, 0, -0.375, 0.5},
+			},
+		},
+		["_4"] = {
+			node_box = {
+				type = "fixed",
+				fixed = {-0.5, -0.5, 0, 0, -0.25, 0.5},
+			},
+		},
+		["_12"] = {
+			node_box = {
+				type = "fixed",
+				fixed = {-0.5, -0.5, 0, 0, 0.25, 0.5},
+			},
+		},
+		["_14"] = {
+			node_box = {
+				type = "fixed",
+				fixed = {-0.5, -0.5, 0, 0, 0.375, 0.5},
+			},
+		},
+		["_15"] = {
+			node_box = {
+				type = "fixed",
+				fixed = {-0.5, -0.5, 0, 0, 0.4375, 0.5},
+			},
+		}
+	}
+
+	local desc = S("%s Microblock"):format(fields.description)
+	for alternate, def in pairs(defs) do
+		def.drawtype = "nodebox"
+		def.paramtype = "light"
+		def.paramtype2 = "facedir"
+		def.on_place = minetest.rotate_node
+		for k, v in pairs(fields) do
+			def[k] = v
+		end
+		def.description = desc
+		if fields.drop then
+			def.drop = modname.. ":micro_" ..fields.drop..alternate
+		end
+		minetest.register_node(":" ..modname.. ":micro_" ..subname..alternate, def)
+	end
+
+	minetest.register_alias(modname.. ":micro_" ..subname.. "_bottom", modname.. ":micro_" ..subname)
+	
+	-- Some saw-less recipes:
+	
+	minetest.register_craft({
+		type = "shapeless",
+		output = modname .. ":micro_" .. subname .. " 7",
+		recipe = {modname .. ":stair_" .. subname .. "_inner"},
+	})
+	
+	minetest.register_craft({
+	output = modname .. ":micro_" .. subname .. " 6",
+		type = "shapeless",
+	recipe = {modname .. ":stair_" .. subname},
+	})
+	
+	minetest.register_craft({
+		type = "shapeless",
+		output = modname .. ":micro_" .. subname .. " 5",
+		recipe = {modname .. ":stair_" .. subname .. "_outer"},
+	})
+	
+	minetest.register_craft({
+		type = "shapeless",
+		output = modname .. ":micro_" .. subname .. " 4",
+		recipe = {modname .. ":slab_" .. subname},
+	})
+	
+	minetest.register_craft({
+		type = "shapeless",
+		output = modname .. ":micro_" .. subname .. " 2",
+		recipe = {modname .. ":panel_" .. subname},
+	})
+	
+	minetest.register_craft({
+		type = "shapeless",
+		output = recipeitem,
+		recipe = {modname .. ":micro_" .. subname, modname .. ":micro_" .. subname, modname .. ":micro_" .. subname, modname .. ":micro_" .. subname, modname .. ":micro_" .. subname, modname .. ":micro_" .. subname, modname .. ":micro_" .. subname, modname .. ":micro_" .. subname},
+	})
+end

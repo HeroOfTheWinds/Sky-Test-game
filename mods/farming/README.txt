@@ -1,3 +1,7 @@
+Minetest Farming Redo Mod 0.4 by TenPlus1
+
+based on
+
 Minetest 0.4 mod: farming
 =========================
 
@@ -33,6 +37,8 @@ Created by Calinou (License: CC BY-SA):
   farming_tool_steelhoe.png
   farming_tool_stonehoe.png
   farming_tool_woodhoe.png
+  farming_tool_mesehoe.png
+  farming_tool_diamondhoe.png
 
 Created by VanessaE (License: WTFPL):
   farming_cotton_seed.png
@@ -55,3 +61,38 @@ Created by VanessaE (License: WTFPL):
   farming_cotton_6.png
   farming_cotton_7.png
   farming_cotton_8.png
+
+Created by Doc (License: WTFPL):
+  farming_cucumber.png
+  farming_cucumber_1.png
+  farming_cucumber_2.png
+  farming_cucumber_3.png
+  farming_cucumber_4.png
+  farming_potato.png
+  farming_potato_1.png
+  farming_potato_2.png
+  farming_potato_3.png
+  farming_potato_4.png
+
+Created by Gambit:
+  default_junglegrass.png
+  farming_carrot.png
+  farming_carrot_1.png
+  farming_carrot_2.png
+  farming_carrot_3.png
+  farming_carrot_4.png
+  farming_carrot_5.png
+  farming_carrot_6.png
+  farming_carrot_7.png
+  farming_carrot_8.png
+
+Created by JoseTheCrafter and edited by TenPlus1:
+  farming_tomato.png
+  farming_tomato_1.png
+  farming_tomato_2.png
+  farming_tomato_3.png
+  farming_tomato_4.png
+  farming_tomato_5.png
+  farming_tomato_6.png
+  farming_tomato_7.png
+  farming_tomato_8.png

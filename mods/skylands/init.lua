@@ -35,6 +35,7 @@ local GRACHA = 0.11 -- Grass chance
 local CACCHA = 0.02 -- Cactus chance
 local JUNGCHA = 0.2 -- Junglegrass chance
 local FIRCHA = 0.03 -- Fire chance
+local FARMCHA = 0.02 -- Chance of farm plants
 local LAKCHA = 0.002
 local ORECHA = 1 / (6 * 6 * 6)
 local PILCHA = 0.002
@@ -130,6 +131,7 @@ dofile(minetest.get_modpath("skylands").."/wheat.lua")
 dofile(minetest.get_modpath("skylands").."/abms.lua")
 dofile(minetest.get_modpath("skylands").."/functions.lua")
 dofile(minetest.get_modpath("skylands").."/pools.lua")
+dofile(minetest.get_modpath("skylands").."/farming.lua")
 
 
 
@@ -532,6 +534,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 							skylands:flower(data, vi)
 						elseif math.random() < GRACHA then
 							skylands:grass(data, vi)
+						elseif math.random() < FARMCHA then
+							skylands:farmplant(data, vi)
 						end
 						dirt[si] = 0
 					elseif biome == 12 then --heaven
@@ -544,6 +548,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 							skylands:flower(data, vi)
 						elseif math.random() < GRACHA then
 							skylands:grass(data, vi)
+						elseif math.random() < FARMCHA then
+							skylands:farmplant(data, vi)
 						elseif math.random() < PILCHA then
 							data[vi] = c_pillar
 						elseif math.random() < PARCHA then
@@ -556,6 +562,9 @@ minetest.register_on_generated(function(minp, maxp, seed)
 					elseif biome == 6 then --deciduous forest
 						lakepoints[li] = {x=x,y=y,z=z}
 						li = li + 1
+						if math.random() < FARMCHA then
+							skylands:farmplant(data, vi)
+						end
 						if dirt[si] >= 2 and math.random() < APPCHA then
 							skylands:appletree(x, y, z, area, data)
 						end

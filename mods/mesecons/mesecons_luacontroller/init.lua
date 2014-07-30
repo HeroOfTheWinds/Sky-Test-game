@@ -122,30 +122,6 @@ end
 -- Overheat stuff --
 --------------------
 
-local heat = function (meta) -- warm up
-	h = meta:get_int("heat")
-	if h ~= nil then
-		meta:set_int("heat", h + 1)
-	end
-end
-
---local cool = function (meta) -- cool down after a while
---	h = meta:get_int("heat")
---	if h ~= nil then
---		meta:set_int("heat", h - 1)
---	end
---end
-
-local overheat = function (meta) -- determine if too hot
-	h = meta:get_int("heat")
-	if h == nil then return true end -- if nil then overheat
-	if h > 40 then 
-		return true
-	else 
-		return false 
-	end
-end
-
 local overheat_off = function(pos)
 	mesecon:receptor_off(pos, mesecon.rules.flat)
 end
@@ -192,40 +168,29 @@ local safe_serialize = function(value)
 	return minetest.serialize(deep_copy(value))
 end
 
-local interrupt = function(params)
-	lc_update(params.pos, {type="interrupt", iid = params.iid})
-end
+mesecon.queue:add_function("lc_interrupt", function (pos, iid, luac_id)
+	-- There is no luacontroller anymore / it has been reprogrammed / replaced
+	if (minetest.get_meta(pos):get_int("luac_id") ~= luac_id) then return end
+	lc_update(pos, {type="interrupt", iid = iid})
+end)
 
 local getinterrupt = function(pos)
 	local interrupt = function (time, iid) -- iid = interrupt id
 		if type(time) ~= "number" then return end
-		local iid = iid or math.random()
-		local meta = minetest.get_meta(pos)
-		local interrupts = minetest.deserialize(meta:get_string("lc_interrupts")) or {}
-		local found = false
-		local search = safe_serialize(iid)
-		for _, i in ipairs(interrupts) do
-			if safe_serialize(i) == search then
-				found = true
-				break
-			end
-		end
-		if not found then
-			table.insert(interrupts, iid)
-			meta:set_string("lc_interrupts", safe_serialize(interrupts))
-		end
-		minetest.after(time, interrupt, {pos=pos, iid = iid})
+		luac_id = minetest.get_meta(pos):get_int("luac_id")
+		mesecon.queue:add_action(pos, "lc_interrupt", {iid, luac_id}, time, iid, 1)
 	end
 	return interrupt
 end
 
-local getdigiline_send = function (pos)
-	local digiline_send = function (channel, msg)
-		if digiline then
+local getdigiline_send = function(pos)
+	if not digiline then return end
+	-- Send messages on next serverstep
+	return function(channel, msg)
+		minetest.after(0, function()
 			digiline:receptor_send(pos, digiline.rules.default, channel, msg)
-		end
+		end)
 	end
-	return digiline_send
 end
 
 local create_environment = function(pos, mem, event)
@@ -243,6 +208,8 @@ local create_environment = function(pos, mem, event)
 			mem = mem,
 			tostring = tostring,
 			tonumber = tonumber,
+			heat = minetest.get_meta(pos):get_int("heat"),
+			heat_max = OVERHEAT_MAX,
 			string = {
 				byte = string.byte,
 				char = string.char,
@@ -252,6 +219,7 @@ local create_environment = function(pos, mem, event)
 				gsub = string.gsub,
 				len = string.len,
 				lower = string.lower,
+				upper = string.upper,
 				match = string.match,
 				rep = string.rep,
 				reverse = string.reverse,
@@ -309,14 +277,10 @@ local create_sandbox = function (code, env)
 	return f
 end
 
-local do_overheat = function (pos, meta)
-	-- Overheat protection
-	heat(meta)
-	--minetest.after(0.5, cool, meta)
-	if overheat(meta) then
+local lc_overheat = function (pos, meta)
+	if mesecon.do_overheat(pos) then -- if too hot
 		local node = minetest.get_node(pos)
 		minetest.swap_node(pos, {name = BASENAME.."_burnt", param2 = node.param2})
-		minetest.get_meta(pos):set_string("lc_interrupts", "")
 		minetest.after(0.2, overheat_off, pos) -- wait for pending operations
 		return true
 	end
@@ -328,20 +292,6 @@ end
 
 local save_memory = function(meta, mem)
 	meta:set_string("lc_memory", safe_serialize(mem))
-end
-
-local interrupt_allow = function (meta, event)
-	if event.type ~= "interrupt" then return true end
-
-	local interrupts = minetest.deserialize(meta:get_string("lc_interrupts")) or {}
-	local search = safe_serialize(event.iid)
-	for _, i in ipairs(interrupts) do
-		if safe_serialize(i) == search then
-			return true
-		end
-	end
-
-	return false
 end
 
 local ports_invalid = function (var)
@@ -357,8 +307,7 @@ end
 
 lc_update = function (pos, event)
 	local meta = minetest.get_meta(pos)
-	if not interrupt_allow(meta, event) then return end
-	if do_overheat(pos, meta) then return end
+	if lc_overheat(pos) then return end
 
 	-- load code & mem from memory
 	local mem  = load_memory(meta)
@@ -366,7 +315,7 @@ lc_update = function (pos, event)
 
 	-- make sure code is ok and create environment
 	local prohibited = code_prohibited(code)
-	if 	prohibited then return prohibited end
+	if prohibited then return prohibited end
 	local env = create_environment(pos, mem, event)
 
 	-- create the sandbox and execute code
@@ -379,7 +328,7 @@ lc_update = function (pos, event)
 	save_memory(meta, mem)
 
 	-- Actually set the ports
-	minetest.after(0, action, pos, env.port)
+	action(pos, env.port)
 end
 
 local reset_meta = function(pos, code, errmsg)
@@ -394,11 +343,11 @@ local reset_meta = function(pos, code, errmsg)
 		"image_button_exit[9.72,-0.25;0.425,0.4;jeija_close_window.png;exit;]"..
 		"label[0.1,5;"..errmsg.."]")
 	meta:set_int("heat", 0)
+	meta:set_int("luac_id", math.random(1, 1000000))
 end
 
 local reset = function (pos)
-	minetest.get_meta(pos):set_string("lc_interrupts", "")
-	action(pos, {a=false, b=false, c=false, d=false}, true)
+	action(pos, {a=false, b=false, c=false, d=false})
 end
 
 --        ______
@@ -517,33 +466,50 @@ minetest.register_node(nodename, {
 	node_box = nodebox,
 	on_construct = reset_meta,
 	on_receive_fields = function(pos, formname, fields)
-		if fields.quit then
+		if not fields.program then
 			return
 		end
 		reset(pos)
 		reset_meta(pos, fields.code)
 		local err = lc_update(pos, {type="program"})
-		if err then print(err) end
-		reset_meta(pos, fields.code, err)
+		if err then
+			print(err)
+			reset_meta(pos, fields.code, err)
+		end
 	end,
+	on_timer = handle_timer,
 	sounds = default.node_sound_stone_defaults(),
 	mesecons = mesecons,
 	digiline = digiline,
-	is_luacontroller = true,
 	virtual_portstates = {	a = a == 1, -- virtual portstates are
-					b = b == 1, -- the ports the the
-					c = c == 1, -- controller powers itself
-					d = d == 1},-- so those that light up
+				b = b == 1, -- the ports the the
+				c = c == 1, -- controller powers itself
+				d = d == 1},-- so those that light up
 	after_dig_node = function (pos, node)
 		mesecon:receptor_off(pos, output_rules)
 	end,
+	is_luacontroller = true,
 })
 end
 end
 end
 end
 
---overheated luacontroller
+------------------------------
+-- overheated luacontroller --
+------------------------------
+
+local mesecons_burnt = {
+	effector =
+	{
+		rules = mesecon.rules.flat,
+		action_change = function (pos, _, rulename, newstate)
+			-- only update portstates when changes are triggered
+			lc_update_real_portstates(pos, rulename, newstate)
+		end
+	}
+}
+
 minetest.register_node(BASENAME .. "_burnt", {
 	drawtype = "nodebox",
 	tiles = {
@@ -569,12 +535,14 @@ minetest.register_node(BASENAME .. "_burnt", {
 		reset(pos)
 		reset_meta(pos, fields.code)
 		local err = lc_update(pos, {type="program"})
-		if err then print(err) end
-		reset_meta(pos, fields.code, err)
+		if err then
+			print(err)
+			reset_meta(pos, fields.code, err)
+		end
 	end,
 	sounds = default.node_sound_stone_defaults(),
-	is_luacontroller = true,
 	virtual_portstates = {a = false, b = false, c = false, d = false},
+	mesecons = mesecons_burnt,
 })
 
 ------------------------
