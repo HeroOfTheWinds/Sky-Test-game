@@ -41,6 +41,8 @@ local ORECHA = 1 / (6 * 6 * 6)
 local PILCHA = 0.002
 local PARCHA = 0.0001
 
+local VEINTHR = 0.25 -- threshold for veins of marble and granite. - higher = wider and more common
+
 local HEAVEN = 8000 --altitude at which "heaven" islands begin appearing
 local HEAVINT = 800 --interval between "heaven" layers; also determines layer width
 
@@ -119,6 +121,28 @@ local np_humid = {
 	seed = -55500,
 	octaves = 3,
 	persist = 0.5
+}
+
+-- 3D noise for marble generation
+
+local np_marble = {
+	offset = 0,
+	scale = 15,
+	spread = {x=130, y=130, z=130},
+	seed = 23,
+	octaves = 3,
+	persist = 0.70
+}
+
+-- 3D noise for granite generation
+
+local np_granite = {
+	offset = 0,
+	scale = 15,
+	spread = {x=130, y=130, z=130},
+	seed = 24,
+	octaves = 3,
+	persist = 0.70
 }
 
 -- Stuff
@@ -207,6 +231,12 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local c_stotin = minetest.get_content_id("skylands:mineral_tin")
 	local c_stomithril = minetest.get_content_id("skylands:mineral_mithril")
 	local c_stosilver = minetest.get_content_id("skylands:mineral_silver")
+	--technic
+	local c_stouranium = minetest.get_content_id("skylands:mineral_uranium")
+	local c_stozinc = minetest.get_content_id("skylands:mineral_zinc")
+	local c_stochrom = minetest.get_content_id("skylands:mineral_chromium")
+	local c_marble = minetest.get_content_id("technic:marble")
+	local c_granite = minetest.get_content_id("technic:granite")
 
 	local c_flistone = minetest.get_content_id("skylands:stone")
 	local c_flidestone = minetest.get_content_id("skylands:desertstone")
@@ -240,6 +270,9 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	
 	local nvals_temp = minetest.get_perlin_map(np_temp, chulens):get3dMap_flat(minposxyz)
 	local nvals_humid = minetest.get_perlin_map(np_humid, chulens):get3dMap_flat(minposxyz)
+	
+	local nvals_granite = minetest.get_perlin_map(np_granite, chulens):get3dMap_flat(minposxyz)
+	local nvals_marble = minetest.get_perlin_map(np_marble, chulens):get3dMap_flat(minposxyz)
 	
 	local lakepoints = {}  --table to store points to scan for lake generation
 	local li = 1 --index for lakepoints
@@ -420,8 +453,14 @@ minetest.register_on_generated(function(minp, maxp, seed)
 									data[vi] = c_flistone
 								end
 							elseif math.random() < ORECHA then
-								local osel = math.random(40)
-								if osel >= 38 then
+								local osel = math.random(46)
+								if osel >= 44 then
+									data[vi] = c_stozinc
+								elseif osel >= 42 then --life the universe and everything
+									data[vi] = c_stouranium --or not.
+								elseif osel >= 40 then
+									data[vi] = c_stochrom
+								elseif osel >= 38 then
 									if mcons then
 										data[vi] = c_stosil
 									else
@@ -468,6 +507,12 @@ minetest.register_on_generated(function(minp, maxp, seed)
 								end
 							else
 								data[vi] = c_flistone
+							end
+							if nvals_marble[nixyz] >= -VEINTHR and nvals_marble[nixyz] <= VEINTHR then
+								data[vi] = c_marble
+							end
+							if nvals_granite[nixyz] >= -VEINTHR and nvals_granite[nixyz] <= VEINTHR then
+								data[vi] = c_granite
 							end
 							stable[si] = stable[si] + 1
 						end

@@ -1,6 +1,7 @@
 default
 fire
 stairs
+technic_worldgen
 mesecons?
 moreblocks?
 moreores?
