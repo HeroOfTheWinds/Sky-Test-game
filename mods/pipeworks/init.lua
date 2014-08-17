@@ -106,21 +106,23 @@ end
 -------------------------------------------
 -- Load the various other parts of the mod
 
+dofile(pipeworks.modpath.."/common.lua")
 dofile(pipeworks.modpath.."/models.lua")
 dofile(pipeworks.modpath.."/autoplace_pipes.lua")
 dofile(pipeworks.modpath.."/autoplace_tubes.lua")
+dofile(pipeworks.modpath.."/luaentity.lua")
 dofile(pipeworks.modpath.."/item_transport.lua")
 dofile(pipeworks.modpath.."/flowing_logic.lua")
 dofile(pipeworks.modpath.."/crafts.lua")
 dofile(pipeworks.modpath.."/tubes.lua")
+dofile(pipeworks.modpath.."/trashcan.lua")
+dofile(pipeworks.modpath.."/wielder.lua")
 
 if pipeworks.enable_pipes then dofile(pipeworks.modpath.."/pipes.lua") end
 if pipeworks.enable_teleport_tube then dofile(pipeworks.modpath.."/teleport_tube.lua") end
 if pipeworks.enable_pipe_devices then dofile(pipeworks.modpath.."/devices.lua") end
 if pipeworks.enable_redefines then dofile(pipeworks.modpath.."/compat.lua") end
 if pipeworks.enable_autocrafter then dofile(pipeworks.modpath.."/autocrafter.lua") end
-if pipeworks.enable_deployer then dofile(pipeworks.modpath.."/deployer.lua") end
-if pipeworks.enable_node_breaker then dofile(pipeworks.modpath.."/node_breaker.lua") end
 
 minetest.register_alias("pipeworks:pipe", "pipeworks:pipe_110000_empty")
 

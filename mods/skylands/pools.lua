@@ -23,6 +23,8 @@ function skylands:gen_pool(lakepoints, area, data, x0, z0, x1, z1)
 	local c_hvngrass = minetest.get_content_id("skylands:heaven_grass")
 	local c_rich = minetest.get_content_id("skylands:rich_dirt")
 	
+	local c_cloud = minetest.get_content_id("skylands:cloud")
+	
 	local sidelen = x1 - x0 -- actually sidelen - 1
 
 
@@ -251,6 +253,7 @@ function skylands:gen_pool(lakepoints, area, data, x0, z0, x1, z1)
 								break
 							elseif data[viu] == c_hvngrass then
 								data[viu] = c_rich
+								break
 							else
 								break
 							end

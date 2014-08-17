@@ -60,17 +60,6 @@ else
 	moretrees.expect_infinite_stacks = true
 end
 
--- node clone, for redefining stuff
-
-function moretrees:clone_node(name)
-	node2={}
-	node=minetest.registered_nodes[name]
-	for k,v in pairs(node) do
-		node2[k]=v
-	end
-	return node2
-end
-
 -- tables, load other files
 
 moretrees.cutting_tools = {
@@ -171,7 +160,9 @@ end
 
 if moretrees.enable_fir then
 	plantslib:register_generate_plant(moretrees.fir_biome, moretrees.spawn_fir_object)
-	plantslib:register_generate_plant(moretrees.fir_biome_snow, moretrees.spawn_fir_snow_object)
+	if minetest.get_modpath("snow") then
+		plantslib:register_generate_plant(moretrees.fir_biome_snow, moretrees.spawn_fir_snow_object)
+	end
 end
 
 -- Code to spawn a birch tree

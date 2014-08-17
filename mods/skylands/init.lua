@@ -1,11 +1,11 @@
--- skylands 4.0 by HeroOfTheWinds, based on floatindev 0.2.0 by paramat
+-- skylands 4.2 by HeroOfTheWinds, based on floatindev 0.2.0 by paramat
 -- For latest stable Minetest and back to 0.4.8
--- Depends default, fire, stairs, moreblocks?, moreores?, mesecons?
+-- Depends default, fire, stairs, moreblocks?, moreores?, mesecons?, technic?
 -- License: code WTFPL
 
 -- Parameters
 
-local YMIN = 700 -- Approximate realm limits.
+local YMIN = -33000 -- Approximate realm limits.
 local YMAX = 33000
 local XMIN = -33000
 local XMAX = 33000
@@ -158,6 +158,7 @@ dofile(minetest.get_modpath("skylands").."/wheat.lua")
 dofile(minetest.get_modpath("skylands").."/abms.lua")
 dofile(minetest.get_modpath("skylands").."/functions.lua")
 dofile(minetest.get_modpath("skylands").."/pools.lua")
+dofile(minetest.get_modpath("skylands").."/tools.lua")
 dofile(minetest.get_modpath("skylands").."/farming.lua")
 
 

@@ -10,7 +10,7 @@ local default_nodes = { -- Default stairs/slabs/panels/microblocks:
 	"bronzeblock",
 	"diamondblock",
 	"desert_stone",
-	"desert_cobble",
+--	"desert_cobble",
 	"glass",
 	"tree",
 	"wood",
@@ -46,3 +46,4 @@ for _, name in pairs(default_nodes) do
 		sunlight_propagates = true,
 	})
 end
+

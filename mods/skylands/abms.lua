@@ -277,3 +277,4 @@ minetest.register_abm({
 		vm:update_map()
 	end,
 })
+
