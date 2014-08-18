@@ -1,5 +1,5 @@
 --[[
-	Minetest Farming Redo Mod 0.5 (26 July 2014)
+	Minetest Farming Redo Mod 1.0 (13th August 2014)
 	by TenPlus1
 	Some additions by HeroOfTheWinds for use with SkyTest
 ]]
@@ -16,6 +16,12 @@ dofile(minetest.get_modpath("farming").."/carrot.lua")
 dofile(minetest.get_modpath("farming").."/potato.lua")
 dofile(minetest.get_modpath("farming").."/tomato.lua")
 dofile(minetest.get_modpath("farming").."/cucumber.lua")
+dofile(minetest.get_modpath("farming").."/corn.lua")
+dofile(minetest.get_modpath("farming").."/coffee.lua")
+dofile(minetest.get_modpath("farming").."/melon.lua")
+dofile(minetest.get_modpath("farming").."/sugar.lua")
+dofile(minetest.get_modpath("farming").."/pumpkin.lua")
+dofile(minetest.get_modpath("farming").."/cocoa.lua")
 dofile(minetest.get_modpath("farming").."/mapgen.lua")
 
 -- Place Seeds on Soil
@@ -68,22 +74,28 @@ end
 
 minetest.register_abm({
 	nodenames = {"group:growing"},
-	neighbors = {"farming:soil_wet"},
-	interval = 70,
+	neighbors = {"farming:soil_wet", "default:jungletree"},
+	interval = 70, -- 70
 	chance = 2,
 	
 	action = function(pos, node)
 
 		-- get node type (e.g. farming:wheat_1)
 
-		local len = string.len(node.name)
-		local plant = string.sub(node.name, 1, len - 1)
-		local numb = string.sub(node.name,len, len)
+		local data = nil
+		data = string.split(node.name, '_', 2)
+		local plant = data[1].."_"
+		local numb = data[2]
 
 		-- check if fully grown
 		if not minetest.registered_nodes[plant..(numb + 1)] then
 			return
 		end
+		
+		-- Check for Cocoa Pod
+		if plant == "farming:cocoa_" and minetest.find_node_near(pos, 1, {"default:jungletree"})then
+		
+		else
 		
 		-- check if on wet soil
 		pos.y = pos.y-1
@@ -98,8 +110,16 @@ minetest.register_abm({
 			return
 		end
 		
+		end
+		
 		-- grow
 		minetest.set_node(pos, {name=plant..(numb + 1)})
+		
+		-- check for corn
+		if plant == "farming:corn_" and tonumber(numb) > 4 then
+			pos.y = pos.y + 1
+			minetest.set_node(pos, {name=plant..(numb + 1)})
+		end
 	end
 })
 
@@ -107,26 +127,32 @@ minetest.register_abm({
 minetest.register_abm({
 	nodenames = {"group:growing"},
 	neighbors = {"farming:rich_soil_wet"},
-	interval = 35,
+	interval = 35, -- originally 70
 	chance = 2,
 	
 	action = function(pos, node)
 
 		-- get node type (e.g. farming:wheat_1)
 
-		local len = string.len(node.name)
-		local plant = string.sub(node.name, 1, len - 1)
-		local numb = string.sub(node.name,len, len)
+		local data = nil
+		data = string.split(node.name, '_', 2)
+		local plant = data[1].."_"
+		local numb = data[2]
 
 		-- check if fully grown
 		if not minetest.registered_nodes[plant..(numb + 1)] then
 			return
 		end
 		
+		-- Check for Cocoa Pod
+		if plant == "farming:cocoa_" and minetest.find_node_near(pos, 1, {"default:jungletree"})then
+		
+		else
+		
 		-- check if on wet soil
 		pos.y = pos.y-1
 		local n = minetest.get_node(pos)
-		if n.name ~= "farming:rich_soil_wet" then
+		if n.name ~= "farming:soil_wet" then
 			return
 		end
 		pos.y = pos.y+1
@@ -136,7 +162,15 @@ minetest.register_abm({
 			return
 		end
 		
+		end
+		
 		-- grow
 		minetest.set_node(pos, {name=plant..(numb + 1)})
+		
+		-- check for corn
+		if plant == "farming:corn_" and tonumber(numb) > 4 then
+			pos.y = pos.y + 1
+			minetest.set_node(pos, {name=plant..(numb + 1)})
+		end
 	end
 })

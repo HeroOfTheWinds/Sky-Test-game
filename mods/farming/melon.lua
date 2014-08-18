@@ -1,21 +1,36 @@
 
---= Tomato (Original textures from link below)
--- http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1288375-food-plus-mod-more-food-than-you-can-imagine-v2-9)
+--= Melon
 
-minetest.register_craftitem("farming:tomato", {
-	description = "Tomato",
-	inventory_image = "farming_tomato.png",
+minetest.register_craftitem("farming:melon_slice", {
+	description = "Melon Slice",
+	inventory_image = "farming_melon_slice.png",
 	on_place = function(itemstack, placer, pointed_thing)
-		return place_seed(itemstack, placer, pointed_thing, "farming:tomato_1")
+		return place_seed(itemstack, placer, pointed_thing, "farming:melon_1")
 	end,
-	on_use = minetest.item_eat(4),
+	on_use = minetest.item_eat(2),
 })
 
--- Define Tomato growth stages
+minetest.register_craft({
+	output = "farming:melon_8",
+	recipe = {
+		{"farming:melon_slice", "farming:melon_slice", "farming:melon_slice"},
+		{"farming:melon_slice", "farming:melon_slice", "farming:melon_slice"},
+		{"farming:melon_slice", "farming:melon_slice", "farming:melon_slice"},
+	}
+})
 
-minetest.register_node("farming:tomato_1", {
+minetest.register_craft({
+	output = "farming:melon_slice 9",
+	recipe = {
+		{"", "farming:melon_8", ""},
+	}
+})
+
+-- Define Melon growth stages
+
+minetest.register_node("farming:melon_1", {
 	drawtype = "plantlike",
-	tiles = {"farming_tomato_1.png"},
+	tiles = {"farming_melon_1.png"},
 	paramtype = "light",
 	waving = 1,
 	walkable = false,
@@ -26,9 +41,9 @@ minetest.register_node("farming:tomato_1", {
 	sounds = default.node_sound_leaves_defaults(),
 })
 
-minetest.register_node("farming:tomato_2", {
+minetest.register_node("farming:melon_2", {
 	drawtype = "plantlike",
-	tiles = {"farming_tomato_2.png"},
+	tiles = {"farming_melon_2.png"},
 	paramtype = "light",
 	waving = 1,
 	walkable = false,
@@ -39,94 +54,91 @@ minetest.register_node("farming:tomato_2", {
 	sounds = default.node_sound_leaves_defaults(),
 })
 
-minetest.register_node("farming:tomato_3", {
+minetest.register_node("farming:melon_3", {
 	drawtype = "plantlike",
-	tiles = {"farming_tomato_3.png"},
-	paramtype = "light",
-	waving = 1,
-	walkable = false,
-	buildable_to = true,
-	drop = "",
-	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
-	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,attached_node=1,growing=1},
-	sounds = default.node_sound_leaves_defaults(),
-})
-
-minetest.register_node("farming:tomato_4", {
-	drawtype = "plantlike",
-	tiles = {"farming_tomato_4.png"},
-	paramtype = "light",
-	waving = 1,
-	walkable = false,
-	buildable_to = true,
-	drop = "",
-	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
-	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,attached_node=1,growing=1},
-	sounds = default.node_sound_leaves_defaults(),
-})
-
-minetest.register_node("farming:tomato_5", {
-	drawtype = "plantlike",
-	tiles = {"farming_tomato_5.png"},
-	paramtype = "light",
-	waving = 1,
-	walkable = false,
-	buildable_to = true,
-	drop = "",
-	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
-	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,attached_node=1,growing=1},
-	sounds = default.node_sound_leaves_defaults(),
-})
-
-minetest.register_node("farming:tomato_6", {
-	drawtype = "plantlike",
-	tiles = {"farming_tomato_6.png"},
-	paramtype = "light",
-	waving = 1,
-	walkable = false,
-	buildable_to = true,
-	drop = "",
-	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
-	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,attached_node=1,growing=1},
-	sounds = default.node_sound_leaves_defaults(),
-})
-
-minetest.register_node("farming:tomato_7", {
-	drawtype = "plantlike",
-	tiles = {"farming_tomato_7.png"},
+	tiles = {"farming_melon_3.png"},
 	paramtype = "light",
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
 	is_ground_content = true,
-	drop = {
-		items = {
-			{items = {'farming:tomato'},rarity=1},
-			{items = {'farming:tomato'},rarity=3},
-		}
-	},
+	drop = "",
 	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
 	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,attached_node=1,growing=1},
 	sounds = default.node_sound_leaves_defaults(),
 })
 
--- Last stage of Carrot growth doesnnot have growing=1 so abm never has to check these
-
-minetest.register_node("farming:tomato_8", {
+minetest.register_node("farming:melon_4", {
 	drawtype = "plantlike",
-	tiles = {"farming_tomato_8.png"},
+	tiles = {"farming_melon_4.png"},
 	paramtype = "light",
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
 	is_ground_content = true,
+	drop = "",
+	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
+	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,attached_node=1,growing=1},
+	sounds = default.node_sound_leaves_defaults(),
+})
+
+minetest.register_node("farming:melon_5", {
+	drawtype = "plantlike",
+	tiles = {"farming_melon_5.png"},
+	paramtype = "light",
+	waving = 1,
+	walkable = false,
+	buildable_to = true,
+	is_ground_content = true,
+	drop = "",
+	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
+	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,attached_node=1,growing=1},
+	sounds = default.node_sound_leaves_defaults(),
+})
+
+minetest.register_node("farming:melon_6", {
+	drawtype = "plantlike",
+	tiles = {"farming_melon_6.png"},
+	paramtype = "light",
+	waving = 1,
+	walkable = false,
+	buildable_to = true,
+	is_ground_content = true,
+	drop = "",
+	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
+	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,attached_node=1,growing=1},
+	sounds = default.node_sound_leaves_defaults(),
+})
+
+minetest.register_node("farming:melon_7", {
+	drawtype = "plantlike",
+	tiles = {"farming_melon_7.png"},
+	paramtype = "light",
+	waving = 1,
+	walkable = false,
+	buildable_to = true,
+	is_ground_content = true,
+	drop = "",
+	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
+	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,attached_node=1,growing=1},
+	sounds = default.node_sound_leaves_defaults(),
+})
+
+-- Last stage of Melon growth doesnnot have growing=1 so abm never has to check these
+
+minetest.register_node("farming:melon_8", {
+	drawtype = "nodebox",
+	description = "Melon",
+	tiles = {"farming_melon_top.png", "farming_melon_top.png", "farming_melon_side.png"},
+	paramtype = "light",
+	waving = 1,
+	walkable = true,
+	is_ground_content = true,
 	drop = {
 		items = {
-			{items = {'farming:tomato 3'},rarity=1},
-			{items = {'farming:tomato 3'},rarity=2},
+			{items = {'farming:melon_slice 9'},rarity=1},
 		}
 	},
-	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
-	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,attached_node=1},
-	sounds = default.node_sound_leaves_defaults(),
+	groups = {choppy=3,flammable=2,plant=1},
+	sounds = default.node_sound_wood_defaults(),
 })

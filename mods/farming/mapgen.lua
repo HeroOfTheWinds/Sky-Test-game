@@ -17,10 +17,10 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			local x1 = minp.x + math.floor((divx+1)*divlen)
 			local z1 = minp.z + math.floor((divz+1)*divlen)
 
-			-- Determine grass amount from perlin noise
+			-- Determine plant amount from perlin noise
 			local grass_amount = math.floor(perlin1:get2d({x=x0, y=z0}) ^ 3 * 9)
 
-			-- Find random positions for grass based on this random
+			-- Find random positions for plant based on this random
 			local pr = PseudoRandom(seed+1)
 
 			for i=0,grass_amount do
@@ -52,15 +52,23 @@ minetest.register_on_generated(function(minp, maxp, seed)
 						-- If dirt with grass, add plant in various stages of maturity
 						if nn == "default:dirt_with_grass" then
 						
-							local type = math.random(1,4)
-							if type == 1 then
+							local type = math.random(1,8)
+							if type == 1 and ground_y > 15 then
 								minetest.set_node(p,{name="farming:potato_"..pr:next(3, 4)})
-							else if type == 2 then
+							elseif type == 2 then
 								minetest.set_node(p,{name="farming:tomato_"..pr:next(7, 8)})
-							else if type == 3 then
+							elseif type == 3 then
 								minetest.set_node(p,{name="farming:carrot_"..pr:next(7, 8)})
-							else
+							elseif type == 4 then
 								minetest.set_node(p,{name="farming:cucumber_4"})
+							elseif type == 5 then
+								minetest.set_node(p,{name="farming:corn_"..pr:next(7, 8)})
+							elseif type == 6 and ground_y > 20 then
+								minetest.set_node(p,{name="farming:coffee_5"})
+							elseif type == 7 and minetest.find_node_near(p, 3, {"group:water"}) then
+								minetest.set_node(p,{name="farming:melon_8"})
+							elseif type == 8 and ground_y > 15 then
+								minetest.set_node(p,{name="farming:pumpkin_8"})
 							end
 						end
 					end
@@ -68,6 +76,4 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			end
 		end
 	end
-end
-end
 end)

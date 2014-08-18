@@ -1,4 +1,4 @@
-Minetest Farming Redo Mod 0.4 by TenPlus1
+Minetest Farming Redo Mod 1.0 by TenPlus1
 
 based on
 
@@ -96,3 +96,22 @@ Created by JoseTheCrafter and edited by TenPlus1:
   farming_tomato_6.png
   farming_tomato_7.png
   farming_tomato_8.png
+
+Created by GeMinecraft and edited by TenPlus1:
+  farming_corn.png
+  farming_corn_cob.png
+  farming_corn_1.png
+  farming_corn_2.png
+  farming_corn_3.png
+  farming_corn_4.png
+  farming_corn_5.png
+  farming_corn_6.png
+  farming_corn_7.png
+  farming_corn_8.png
+
+Created by TenPlus1
+  farming_cocoa_1.png
+  farming_cocoa_2.png
+  farming_cocoa_3.png
+  farming_cocoa_beans.png
+  farming_cookie.png

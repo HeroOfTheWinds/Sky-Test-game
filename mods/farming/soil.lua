@@ -80,7 +80,7 @@ minetest.register_abm({
 			-- if its wet turn it back into dry soil
 			elseif node.name == "farming:soil_wet" then
 				minetest.set_node(pos, {name="farming:soil"})
-
+				
 			elseif node.name == "farming:rich_soil" then
 				-- only turn it back if there is no plant on top of it
 				if minetest.get_item_group(nn, "plant") == 0 then

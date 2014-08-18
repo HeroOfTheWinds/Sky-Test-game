@@ -11,6 +11,23 @@ minetest.register_craftitem("farming:carrot", {
 	on_use = minetest.item_eat(4),
 })
 
+-- Golden Carrot
+
+minetest.register_craftitem("farming:carrot_gold", {
+	description = "Golden Carrot",
+	inventory_image = "farming_carrot_gold.png",
+	on_use = minetest.item_eat(6),
+})
+
+minetest.register_craft({
+	output = "farming:carrot_gold",
+	recipe = {
+		{"", "default:gold_lump", ""},
+		{"default:gold_lump", "farming:carrot", "default:gold_lump"},
+		{"", "default:gold_lump", ""},
+	}
+})
+
 -- Define Carrot growth stages
 
 minetest.register_node("farming:carrot_1", {
@@ -98,6 +115,7 @@ minetest.register_node("farming:carrot_7", {
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
+	is_ground_content = true,
 	drop = {
 		items = {
 			{items = {'farming:carrot'},rarity=1},
@@ -118,6 +136,7 @@ minetest.register_node("farming:carrot_8", {
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
+	is_ground_content = true,
 	drop = {
 		items = {
 			{items = {'farming:carrot 2'},rarity=1},

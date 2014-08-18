@@ -59,6 +59,7 @@ minetest.register_node("farming:potato_3", {
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
+	is_ground_content = true,
 	drop = {
 		items = {
 			{items = {'farming:potato'},rarity=1},
@@ -79,6 +80,7 @@ minetest.register_node("farming:potato_4", {
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
+	is_ground_content = true,
 	drop = {
 		items = {
 			{items = {'farming:potato 2'},rarity=1},

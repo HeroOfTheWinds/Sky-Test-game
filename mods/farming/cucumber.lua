@@ -61,6 +61,7 @@ minetest.register_node("farming:cucumber_4", {
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
+	is_ground_content = true,
 	drop = {
 		items = {
 			{items = {'farming:cucumber'},rarity=1},
