@@ -1,22 +1,39 @@
 
---= Cucumber (Original textures from DocFarming mod)
--- https://forum.minetest.net/viewtopic.php?id=3948
+--= Raspberries
 
-minetest.register_craftitem("farming:cucumber", {
-	description = "Cucumber",
-	inventory_image = "farming_cucumber.png",
+minetest.register_craftitem("farming:raspberries", {
+	description = "Raspberries",
+	inventory_image = "farming_raspberries.png",
 	on_place = function(itemstack, placer, pointed_thing)
-		return farming.place_seed(itemstack, placer, pointed_thing, "farming:cucumber_1")
+		return farming.place_seed(itemstack, placer, pointed_thing, "farming:raspberry_1")
 	end,
-	on_use = minetest.item_eat(4),
+	on_use = minetest.item_eat(1),
 })
 
--- Define Cucumber growth stages
+-- Raspberry Smoothie
 
-minetest.register_node("farming:cucumber_1", {
+minetest.register_craftitem("farming:smoothie_raspberry", {
+	description = "Raspberry Smoothie",
+	inventory_image = "farming_raspberry_smoothie.png",
+	on_use = minetest.item_eat(2, "vessels:drinking_glass"),
+})
+
+minetest.register_craft({
+	output = "farming:smoothie_raspberry",
+	recipe = {
+		{"default:snow"},
+		{"farming:raspberries"},
+		{"vessels:drinking_glass"},
+	}
+})
+
+-- Define Raspberry growth stages
+
+minetest.register_node("farming:raspberry_1", {
 	drawtype = "plantlike",
-	tiles = {"farming_cucumber_1.png"},
+	tiles = {"farming_raspberry_1.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -26,10 +43,11 @@ minetest.register_node("farming:cucumber_1", {
 	sounds = default.node_sound_leaves_defaults(),
 })
 
-minetest.register_node("farming:cucumber_2", {
+minetest.register_node("farming:raspberry_2", {
 	drawtype = "plantlike",
-	tiles = {"farming_cucumber_2.png"},
+	tiles = {"farming_raspberry_2.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -39,10 +57,11 @@ minetest.register_node("farming:cucumber_2", {
 	sounds = default.node_sound_leaves_defaults(),
 })
 
-minetest.register_node("farming:cucumber_3", {
+minetest.register_node("farming:raspberry_3", {
 	drawtype = "plantlike",
-	tiles = {"farming_cucumber_3.png"},
+	tiles = {"farming_raspberry_3.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -52,20 +71,22 @@ minetest.register_node("farming:cucumber_3", {
 	sounds = default.node_sound_leaves_defaults(),
 })
 
--- Last stage of Cucumber growth doesnnot have growing=1 so abm never has to check these
+-- Last stage of Raspberry growth does not have growing=1 so abm never has to check these
 
-minetest.register_node("farming:cucumber_4", {
+minetest.register_node("farming:raspberry_4", {
 	drawtype = "plantlike",
-	tiles = {"farming_cucumber_4.png"},
+	tiles = {"farming_raspberry_4.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
 	is_ground_content = true,
 	drop = {
 		items = {
-			{items = {'farming:cucumber'},rarity=1},
-			{items = {'farming:cucumber 2'},rarity=2},
+			{items = {'farming:raspberries 2'},rarity=1},
+			{items = {'farming:raspberries'},rarity=2},
+			{items = {'farming:raspberries'},rarity=3},
 		}
 	},
 	selection_box = {type = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},

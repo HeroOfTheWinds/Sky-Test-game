@@ -1,4 +1,5 @@
-Minetest Farming Redo Mod 1.0 by TenPlus1
+Minetest Farming Redo 
+by TenPlus1
 
 based on
 
@@ -73,6 +74,12 @@ Created by Doc (License: WTFPL):
   farming_potato_2.png
   farming_potato_3.png
   farming_potato_4.png
+  farming_raspberries.png
+  farming_raspberry_1.png
+  farming_raspberry_2.png
+  farming_raspberry_3.png
+  farming_raspberry_4.png
+
 
 Created by Gambit:
   default_junglegrass.png
@@ -115,3 +122,9 @@ Created by TenPlus1
   farming_cocoa_3.png
   farming_cocoa_beans.png
   farming_cookie.png
+  farming_raspberry_smoothie.png
+  farming_rhubarb_1.png
+  farming_rhubarb_2.png
+  farming_rhubarb_3.png
+  farming_rhubarb.png
+  farming_rhubarb_pie.png

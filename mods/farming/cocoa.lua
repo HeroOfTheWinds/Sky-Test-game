@@ -1,25 +1,15 @@
 
--- Re-register Jungletree (tree=2 for placement below)
+-- Override default jungletree, add tree=2 for cocoa placement
 
-minetest.register_node(":default:jungletree", {
-	description = "Jungle Tree",
-	tiles = {"default_jungletree_top.png", "default_jungletree_top.png", "default_jungletree.png"},
-	paramtype2 = "facedir",
-	is_ground_content = false,
-	groups = {tree=2,choppy=2,oddly_breakable_by_hand=1,flammable=2},
-	sounds = default.node_sound_wood_defaults(),
-	on_place = minetest.rotate_node
-})
+minetest.override_item("default:jungletree", {groups = {tree=2,choppy=2,oddly_breakable_by_hand=1,flammable=2}})
 
 -- Place Cocoa
 
 function place_cocoa(itemstack, placer, pointed_thing, plantname)
 	local pt = pointed_thing
+
 	-- check if pointing at a node
-	if not pt then
-		return
-	end
-	if pt.type ~= "node" then
+	if not pt and pt.type ~= "node" then
 		return
 	end
 	
@@ -31,8 +21,7 @@ function place_cocoa(itemstack, placer, pointed_thing, plantname)
 	end
 
 	-- check if pointing at jungletree
-	if minetest.get_item_group(under.name, "tree") == 2 then
-	else
+	if minetest.get_item_group(under.name, "tree") ~= 2 then
 		return
 	end
 	
@@ -106,11 +95,6 @@ minetest.register_node("farming:cocoa_1", {
 	selection_box = {type = "fixed",fixed = {-0.3, -0.5, -0.3, 0.3, 0.5, 0.3},},
 	groups = {snappy=3,flammable=2,plant=1,not_in_creative_inventory=1,growing=1},
 	sounds = default.node_sound_leaves_defaults(),
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
-		if placer:is_player() then
-			minetest.set_node(pos, {name="ethereal:banana", param2=1})
-		end
-	end,
 })
 
 minetest.register_node("farming:cocoa_2", {
@@ -150,7 +134,7 @@ minetest.register_node("farming:cocoa_3", {
 
 minetest.register_abm({
 	nodenames = {"default:jungletree"},
-	neighbors = {"default:jungleleaves"},
+	neighbors = {"default:jungleleaves", "moretrees:jungletree_leaves_green"},
 	interval = 80,
 	chance = 20,
 	action = function(pos, node)
@@ -164,7 +148,7 @@ minetest.register_abm({
 		else return
 		end
 		
-		if minetest.get_node(pos).name == "air" then
+		if minetest.get_node(pos).name == "air" and minetest.get_node_light(pos) > 11 then
 --			print ("COCOA", pos.x, pos.y, pos.z)
 			minetest.set_node(pos,{name="farming:cocoa_"..tostring(math.random(1,3))})
 		end

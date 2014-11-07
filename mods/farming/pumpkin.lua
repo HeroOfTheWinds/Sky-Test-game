@@ -17,7 +17,7 @@ minetest.register_craftitem("farming:pumpkin_slice", {
 	description = "Pumpkin Slice",
 	inventory_image = "farming_pumpkin_slice.png",
 	on_place = function(itemstack, placer, pointed_thing)
-		return place_seed(itemstack, placer, pointed_thing, "farming:pumpkin_1")
+		return farming.place_seed(itemstack, placer, pointed_thing, "farming:pumpkin_1")
 	end,
 	on_use = minetest.item_eat(2),
 })
@@ -41,11 +41,28 @@ minetest.register_craft({
 -- Jack 'O Lantern
 minetest.register_node("farming:jackolantern", {
 	description = "Jack 'O Lantern",
-	tiles = {"farming_pumpkin_top.png", "farming_pumpkin_top.png", "farming_pumpkin_side.png", "farming_pumpkin_side.png", "farming_pumpkin_side.png", "farming_pumpkin_face.png"},
+	tiles = {"farming_pumpkin_top.png", "farming_pumpkin_top.png", "farming_pumpkin_side.png", "farming_pumpkin_side.png", "farming_pumpkin_side.png", "farming_pumpkin_face_off.png"},
+	paramtype2 = "facedir",
+	groups = {choppy=3,flammable=2},
+	sounds = default.node_sound_wood_defaults(),
+	on_punch = function(pos, node, puncher)
+		node.name = "farming:jackolantern_on"
+		minetest.set_node(pos, node)
+	end,
+})
+
+minetest.register_node("farming:jackolantern_on", {
+	description = "Jack 'O Lantern",
+	tiles = {"farming_pumpkin_top.png", "farming_pumpkin_top.png", "farming_pumpkin_side.png", "farming_pumpkin_side.png", "farming_pumpkin_side.png", "farming_pumpkin_face_on.png"},
 	light_source = 14,
 	paramtype2 = "facedir",
-	groups = {choppy=3,flammable=2,plant=1},
+	groups = {choppy=3,flammable=2},
 	sounds = default.node_sound_wood_defaults(),
+	drop = "farming:jackolantern",
+	on_punch = function(pos, node, puncher)
+		node.name = "farming:jackolantern"
+		minetest.set_node(pos, node)
+	end,
 })
 
 minetest.register_craft({
@@ -88,6 +105,7 @@ minetest.register_node("farming:pumpkin_1", {
 	drawtype = "plantlike",
 	tiles = {"farming_pumpkin_1.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -101,6 +119,7 @@ minetest.register_node("farming:pumpkin_2", {
 	drawtype = "plantlike",
 	tiles = {"farming_pumpkin_2.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -114,6 +133,7 @@ minetest.register_node("farming:pumpkin_3", {
 	drawtype = "plantlike",
 	tiles = {"farming_pumpkin_3.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -127,6 +147,7 @@ minetest.register_node("farming:pumpkin_4", {
 	drawtype = "plantlike",
 	tiles = {"farming_pumpkin_4.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -140,6 +161,7 @@ minetest.register_node("farming:pumpkin_5", {
 	drawtype = "plantlike",
 	tiles = {"farming_pumpkin_5.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -166,7 +188,6 @@ minetest.register_node("farming:pumpkin_7", {
 	drawtype = "plantlike",
 	tiles = {"farming_pumpkin_7.png"},
 	paramtype = "light",
-	waving = 1,
 	walkable = false,
 	buildable_to = true,
 	drop = "",
@@ -181,7 +202,6 @@ minetest.register_node("farming:pumpkin_8", {
 	drawtype = "plantlike",
 	tiles = {"farming_pumpkin_8.png"},
 	paramtype = "light",
-	waving = 1,
 	walkable = false,
 	buildable_to = true,
 	is_ground_content = true,

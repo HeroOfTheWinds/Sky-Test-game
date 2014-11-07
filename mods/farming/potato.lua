@@ -6,7 +6,7 @@ minetest.register_craftitem("farming:potato", {
 	description = "Potato",
 	inventory_image = "farming_potato.png",
 	on_place = function(itemstack, placer, pointed_thing)
-		return place_seed(itemstack, placer, pointed_thing, "farming:potato_1")
+		return farming.place_seed(itemstack, placer, pointed_thing, "farming:potato_1")
 	end,
 	on_use = minetest.item_eat(1),
 })
@@ -30,6 +30,7 @@ minetest.register_node("farming:potato_1", {
 	drawtype = "plantlike",
 	tiles = {"farming_potato_1.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -43,6 +44,7 @@ minetest.register_node("farming:potato_2", {
 	drawtype = "plantlike",
 	tiles = {"farming_potato_2.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -56,6 +58,7 @@ minetest.register_node("farming:potato_3", {
 	drawtype = "plantlike",
 	tiles = {"farming_potato_3.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -77,6 +80,7 @@ minetest.register_node("farming:potato_4", {
 	drawtype = "plantlike",
 	tiles = {"farming_potato_4.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,

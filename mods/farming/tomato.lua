@@ -6,7 +6,7 @@ minetest.register_craftitem("farming:tomato", {
 	description = "Tomato",
 	inventory_image = "farming_tomato.png",
 	on_place = function(itemstack, placer, pointed_thing)
-		return place_seed(itemstack, placer, pointed_thing, "farming:tomato_1")
+		return farming.place_seed(itemstack, placer, pointed_thing, "farming:tomato_1")
 	end,
 	on_use = minetest.item_eat(4),
 })
@@ -17,6 +17,7 @@ minetest.register_node("farming:tomato_1", {
 	drawtype = "plantlike",
 	tiles = {"farming_tomato_1.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -30,6 +31,7 @@ minetest.register_node("farming:tomato_2", {
 	drawtype = "plantlike",
 	tiles = {"farming_tomato_2.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -43,6 +45,7 @@ minetest.register_node("farming:tomato_3", {
 	drawtype = "plantlike",
 	tiles = {"farming_tomato_3.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -56,6 +59,7 @@ minetest.register_node("farming:tomato_4", {
 	drawtype = "plantlike",
 	tiles = {"farming_tomato_4.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -69,6 +73,7 @@ minetest.register_node("farming:tomato_5", {
 	drawtype = "plantlike",
 	tiles = {"farming_tomato_5.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -82,6 +87,7 @@ minetest.register_node("farming:tomato_6", {
 	drawtype = "plantlike",
 	tiles = {"farming_tomato_6.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,

@@ -3,11 +3,28 @@
 
 -- Wheat Seed
 
-minetest.register_craftitem("farming:seed_wheat", {
+--minetest.register_craftitem("farming:seed_wheat", {
+--	description = "Wheat Seed",
+--	inventory_image = "farming_wheat_seed.png",
+--	on_place = function(itemstack, placer, pointed_thing)
+--		return farming.place_seed(itemstack, placer, pointed_thing, "farming:wheat_1")
+--	end,
+--})
+
+minetest.register_node("farming:seed_wheat", {
 	description = "Wheat Seed",
+	tiles = {"farming_wheat_seed.png"},
 	inventory_image = "farming_wheat_seed.png",
+	wield_image = "farming_wheat_seed.png",
+	drawtype = "signlike",
+	groups = {seed = 1, snappy = 3, attached_node = 1},
+	paramtype = "light",
+	paramtype2 = "wallmounted",
+	walkable = false,
+	sunlight_propagates = true,
+	selection_box = {type = "fixed", fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},},
 	on_place = function(itemstack, placer, pointed_thing)
-		return place_seed(itemstack, placer, pointed_thing, "farming:wheat_1")
+		return farming.place_seed(itemstack, placer, pointed_thing, "farming:wheat_1")
 	end,
 })
 
@@ -52,6 +69,7 @@ minetest.register_node("farming:wheat_1", {
 	drawtype = "plantlike",
 	tiles = {"farming_wheat_1.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -65,6 +83,7 @@ minetest.register_node("farming:wheat_2", {
 	drawtype = "plantlike",
 	tiles = {"farming_wheat_2.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -78,6 +97,7 @@ minetest.register_node("farming:wheat_3", {
 	drawtype = "plantlike",
 	tiles = {"farming_wheat_3.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -91,6 +111,7 @@ minetest.register_node("farming:wheat_4", {
 	drawtype = "plantlike",
 	tiles = {"farming_wheat_4.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -104,6 +125,7 @@ minetest.register_node("farming:wheat_5", {
 	drawtype = "plantlike",
 	tiles = {"farming_wheat_5.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -122,6 +144,7 @@ minetest.register_node("farming:wheat_6", {
 	drawtype = "plantlike",
 	tiles = {"farming_wheat_6.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -140,6 +163,7 @@ minetest.register_node("farming:wheat_7", {
 	drawtype = "plantlike",
 	tiles = {"farming_wheat_7.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,

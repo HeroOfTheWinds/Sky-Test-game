@@ -5,7 +5,7 @@ minetest.register_craftitem("farming:coffee_beans", {
 	description = "Coffee Beans",
 	inventory_image = "farming_coffee_beans.png",
 	on_place = function(itemstack, placer, pointed_thing)
-		return place_seed(itemstack, placer, pointed_thing, "farming:coffee_1")
+		return farming.place_seed(itemstack, placer, pointed_thing, "farming:coffee_1")
 	end,
 })
 
@@ -110,6 +110,7 @@ minetest.register_node("farming:coffee_1", {
 	drawtype = "plantlike",
 	tiles = {"farming_coffee_1.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -123,6 +124,7 @@ minetest.register_node("farming:coffee_2", {
 	drawtype = "plantlike",
 	tiles = {"farming_coffee_2.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -136,6 +138,7 @@ minetest.register_node("farming:coffee_3", {
 	drawtype = "plantlike",
 	tiles = {"farming_coffee_3.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -149,6 +152,7 @@ minetest.register_node("farming:coffee_4", {
 	drawtype = "plantlike",
 	tiles = {"farming_coffee_4.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,
@@ -164,6 +168,7 @@ minetest.register_node("farming:coffee_5", {
 	drawtype = "plantlike",
 	tiles = {"farming_coffee_5.png"},
 	paramtype = "light",
+	sunlight_propagates = true,
 	waving = 1,
 	walkable = false,
 	buildable_to = true,

@@ -1,15 +1,51 @@
 
 --= Hoes
 
+-- Hoe registration function
+
+farming.register_hoe = function(name, def)
+	-- Check for : prefix (register new hoes in your mod's namespace)
+	if name:sub(1,1) ~= ":" then
+		name = ":" .. name
+	end
+	-- Check def table
+	if def.description == nil then
+		def.description = "Hoe"
+	end
+	if def.inventory_image == nil then
+		def.inventory_image = "unknown_item.png"
+	end
+	if def.recipe == nil then
+		def.recipe = {
+			{"air","air",""},
+			{"","group:stick",""},
+			{"","group:stick",""}
+		}
+	end
+	if def.max_uses == nil then
+		def.max_uses = 30
+	end
+	-- Register the tool
+	minetest.register_tool(name, {
+		description = def.description,
+		inventory_image = def.inventory_image,
+		on_use = function(itemstack, user, pointed_thing)
+			return farming.hoe_on_use(itemstack, user, pointed_thing, def.max_uses)
+		end
+	})
+	-- Register its recipe
+	minetest.register_craft({
+		output = name:gsub(":", "", 1),
+		recipe = def.recipe
+	})
+end
+
 -- Turns nodes with group soil=1 into soil
 
 function farming.hoe_on_use(itemstack, user, pointed_thing, uses)
 	local pt = pointed_thing
 	-- check if pointing at a node
-	if not pt then
-		return
-	end
-	if pt.type ~= "node" then
+	if not pt or pt.type ~= "node" then
 		return
 	end
 	
@@ -25,10 +61,8 @@ function farming.hoe_on_use(itemstack, user, pointed_thing, uses)
 	local above = minetest.get_node(p)
 	
 	-- return if any of the nodes is not registered
-	if not minetest.registered_nodes[under.name] then
-		return
-	end
-	if not minetest.registered_nodes[above.name] then
+	if not minetest.registered_nodes[under.name]
+	or not minetest.registered_nodes[above.name] then
 		return
 	end
 	
@@ -53,19 +87,12 @@ function farming.hoe_on_use(itemstack, user, pointed_thing, uses)
 	return itemstack
 end
 
--- Wooden Hoe
+-- Define Hoes
 
-minetest.register_tool("farming:hoe_wood", {
+farming.register_hoe(":farming:hoe_wood", {
 	description = "Wooden Hoe",
 	inventory_image = "farming_tool_woodhoe.png",
-	
-	on_use = function(itemstack, user, pointed_thing)
-		return farming.hoe_on_use(itemstack, user, pointed_thing, 30)
-	end,
-})
-
-minetest.register_craft({
-	output = "farming:hoe_wood",
+	max_uses = 30,
 	recipe = {
 		{"group:wood", "group:wood"},
 		{"", "group:stick"},
@@ -73,19 +100,10 @@ minetest.register_craft({
 	}
 })
 
--- Stone Hoe
-
-minetest.register_tool("farming:hoe_stone", {
+farming.register_hoe(":farming:hoe_stone", {
 	description = "Stone Hoe",
 	inventory_image = "farming_tool_stonehoe.png",
-	
-	on_use = function(itemstack, user, pointed_thing)
-		return farming.hoe_on_use(itemstack, user, pointed_thing, 90)
-	end,
-})
-
-minetest.register_craft({
-	output = "farming:hoe_stone",
+	max_uses = 90,
 	recipe = {
 		{"group:stone", "group:stone"},
 		{"", "group:stick"},
@@ -93,19 +111,10 @@ minetest.register_craft({
 	}
 })
 
--- Steel Hoe
-
-minetest.register_tool("farming:hoe_steel", {
+farming.register_hoe(":farming:hoe_steel", {
 	description = "Steel Hoe",
 	inventory_image = "farming_tool_steelhoe.png",
-	
-	on_use = function(itemstack, user, pointed_thing)
-		return farming.hoe_on_use(itemstack, user, pointed_thing, 200)
-	end,
-})
-
-minetest.register_craft({
-	output = "farming:hoe_steel",
+	max_uses = 200,
 	recipe = {
 		{"default:steel_ingot", "default:steel_ingot"},
 		{"", "group:stick"},
@@ -113,19 +122,10 @@ minetest.register_craft({
 	}
 })
 
--- Bronze Hoe
-
-minetest.register_tool("farming:hoe_bronze", {
+farming.register_hoe(":farming:hoe_bronze", {
 	description = "Bronze Hoe",
 	inventory_image = "farming_tool_bronzehoe.png",
-	
-	on_use = function(itemstack, user, pointed_thing)
-		return farming.hoe_on_use(itemstack, user, pointed_thing, 220)
-	end,
-})
-
-minetest.register_craft({
-	output = "farming:hoe_bronze",
+	max_uses = 220,
 	recipe = {
 		{"default:bronze_ingot", "default:bronze_ingot"},
 		{"", "group:stick"},
@@ -133,19 +133,10 @@ minetest.register_craft({
 	}
 })
 
--- Mese
-
-minetest.register_tool("farming:hoe_mese", {
+farming.register_hoe(":farming:hoe_mese", {
 	description = "Mese Hoe",
 	inventory_image = "farming_tool_mesehoe.png",
-	
-	on_use = function(itemstack, user, pointed_thing)
-		return farming.hoe_on_use(itemstack, user, pointed_thing, 350)
-	end,
-})
-
-minetest.register_craft({
-	output = "farming:hoe_mese",
+	max_uses = 350,
 	recipe = {
 		{"default:mese_crystal", "default:mese_crystal"},
 		{"", "group:stick"},
@@ -153,19 +144,10 @@ minetest.register_craft({
 	}
 })
 
--- Diamond
-
-minetest.register_tool("farming:hoe_diamond", {
+farming.register_hoe(":farming:hoe_diamond", {
 	description = "Diamond Hoe",
 	inventory_image = "farming_tool_diamondhoe.png",
-	
-	on_use = function(itemstack, user, pointed_thing)
-		return farming.hoe_on_use(itemstack, user, pointed_thing, 500)
-	end,
-})
-
-minetest.register_craft({
-	output = "farming:hoe_diamond",
+	max_uses = 500,
 	recipe = {
 		{"default:diamond", "default:diamond"},
 		{"", "group:stick"},
