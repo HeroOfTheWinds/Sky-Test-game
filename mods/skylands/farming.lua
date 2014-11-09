@@ -29,7 +29,7 @@ function skylands:farmplant(data, vi)
 		data[vi] = c_pumpkin
 	elseif rand == 9 then
 		data[vi] = c_raspberry
-	elseif rand == 10 and ground_y > 10 then
+	elseif rand == 10 then
 		data[vi] = c_rhubarb
 	else
 		data[vi] = c_blueberry
