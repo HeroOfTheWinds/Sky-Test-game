@@ -8,7 +8,9 @@ minetest.register_on_newplayer(function(player)
 		player:get_inventory():add_item('main', 'default:torch 99')
 		player:get_inventory():add_item('main', 'bridgetool:bridge_tool')
 		player:get_inventory():add_item('main', 'default:cobble 99')
+		player:get_inventory():add_item('main', 'default:cobble 99')
 		player:get_inventory():add_item('main', 'helicopter:heli')
+		player:get_inventory():add_item('main', 'default:cobble 99')
 	end
 end)
 
