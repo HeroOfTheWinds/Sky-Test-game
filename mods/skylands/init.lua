@@ -40,6 +40,7 @@ local LAKCHA = 0.002
 local ORECHA = 1 / (6 * 6 * 6)
 local PILCHA = 0.002
 local PARCHA = 0.0001
+local MORECHA = 0.01 -- Chance of moretrees variants spawning
 
 local VEINTHR = 0.25 -- threshold for veins of marble and granite. - higher = wider and more common
 
@@ -256,6 +257,21 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local c_hvngrass = minetest.get_content_id("skylands:heaven_grass")
 	local c_pillar = minetest.get_content_id("skylands:s_pillar")
 	local c_parthenon = minetest.get_content_id("skylands:s_parthenon")
+	
+	--Moretrees Saplings
+	local c_beech = minetest.get_content_id("moretrees:beech_sapling_ongen")
+	local c_apple_tree = minetest.get_content_id("moretrees:apple_tree_sapling_ongen")
+	local c_oak = minetest.get_content_id("moretrees:oak_sapling_ongen")
+	local c_sequoia = minetest.get_content_id("moretrees:sequoia_sapling_ongen")
+	local c_palm = minetest.get_content_id("moretrees:palm_sapling_ongen")
+	local c_pine = minetest.get_content_id("moretrees:pine_sapling_ongen")
+	local c_rubber = minetest.get_content_id("moretrees:rubber_tree_sapling_ongen")
+	local c_willow = minetest.get_content_id("moretrees:willow_sapling_ongen")
+	local c_acacia = minetest.get_content_id("moretrees:acacia_sapling_ongen")
+	local c_birch = minetest.get_content_id("moretrees:birch_sapling_ongen")
+	local c_spruce = minetest.get_content_id("moretrees:spruce_sapling_ongen")
+	local c_jungletree = minetest.get_content_id("moretrees:jungletree_sapling_ongen")
+	local c_fir = minetest.get_content_id("moretrees:fir_sapling_ongen")
 	
 	
 	local chulens = {x=sidelen, y=sidelen, z=sidelen}
@@ -572,13 +588,23 @@ minetest.register_on_generated(function(minp, maxp, seed)
 					if biome == 7 or biome == 11 then --desert
 						if dirt[si] >= 2 and math.random() < CACCHA then
 							skylands:desertplant(data, vi)
+						elseif dirt[si] >= 2 and (math.random() * 5) < MORECHA then
+							data[vi] = c_palm
 						end
 						dirt[si] = 0
 					elseif biome == 5 then --grassland
 						lakepoints[li] = {x=x,y=y,z=z}
 						li = li + 1
 						if dirt[si] >= 2 and math.random() < (APPCHA * 0.5) then
-							skylands:appletree(x, y, z, area, data)
+							if math.random(10) == 3 then
+								data[vi] = c_beech
+							elseif math.random(10) == 6 then
+								data[vi] = c_willow
+							else
+								skylands:appletree(x, y, z, area, data)
+							end
+						elseif dirt[si] >= 2 and math.random() < MORECHA then
+							data[vi] = c_birch
 						elseif math.random() < FLOCHA then
 							skylands:flower(data, vi)
 						elseif math.random() < GRACHA then
@@ -615,7 +641,23 @@ minetest.register_on_generated(function(minp, maxp, seed)
 							skylands:farmplant(data, vi)
 						end
 						if dirt[si] >= 2 and math.random() < APPCHA then
-							skylands:appletree(x, y, z, area, data)
+							if math.random(10) == 3 then
+								data[vi] = c_beech
+							elseif math.random(10) == 6 then
+								data[vi] = c_willow
+							else
+								skylands:appletree(x, y, z, area, data)
+							end
+						elseif dirt[si] >= 2 and math.random() < MORECHA then
+							data[vi] = c_oak
+						elseif dirt[si] >= 2 and math.random() < MORECHA then
+							data[vi] = c_apple_tree
+						elseif dirt[si] >= 2 and math.random() < MORECHA then
+							data[vi] = c_sequoia
+						elseif dirt[si] >= 2 and math.random() < MORECHA then
+							data[vi] = c_birch
+						elseif dirt[si] >= 2 and math.random() < MORECHA then
+							data[vi] = c_rubber
 						end
 						dirt[si] = 0
 					elseif biome == 4 then -- drylands
@@ -626,6 +668,12 @@ minetest.register_on_generated(function(minp, maxp, seed)
 					elseif biome == 3 then --taiga
 						if dirt[si] >= 2 and math.random() < PINCHA then
 							skylands:pinetree(x, y, z, area, data)
+						elseif dirt[si] >= 2 and (math.random() * 3) < MORECHA then
+							data[vi] = c_spruce
+						elseif dirt[si] >= 2 and (math.random() * 3) < MORECHA then
+							data[vi] = c_pine
+						elseif dirt[si] >= 2 and (math.random() * 3) < MORECHA then
+							data[vi] = c_fir
 						end
 						dirt[si] = 0
 					elseif biome == 2 then --snowy plains
@@ -633,11 +681,17 @@ minetest.register_on_generated(function(minp, maxp, seed)
 						li = li + 1
 						if dirt[si] >= 2 and math.random() < SPINCHA then
 							skylands:pinetree(x, y, z, area, data)
+						elseif dirt[si] >= 2 and math.random() < MORECHA then
+							data[vi] = c_pine
+						elseif dirt[si] >= 2 and (math.random() * 3) < MORECHA then
+							data[vi] = c_spruce
 						end
 						dirt[si] = 0
 					elseif biome == 8 then --savanna
 						if dirt[si] >= 2 and math.random() < ACACHA then
 							skylands:acaciatree(x, y, z, area, data)
+						elseif dirt[si] >= 2 and math.random() < MORECHA then
+							data[vi] = c_acacia
 						elseif dirt[si] >= 2 and math.random() < GRACHA then
 							data[vi] = c_golgrass
 						end
@@ -647,6 +701,10 @@ minetest.register_on_generated(function(minp, maxp, seed)
 						li = li + 1
 						if dirt[si] >= 2 and math.random() < JUNTCHA then
 							skylands:jungletree(x, y, z, area, data)
+						elseif dirt[si] >= 2 and (math.random() * 2) < MORECHA then
+							data[vi] = c_jungletree
+						elseif dirt[si] >= 2 and (math.random() * 3) < MORECHA then
+							data[vi] = c_rubber
 						elseif math.random() < JUNGCHA then
 							data[vi] = c_jungrass
 						end
