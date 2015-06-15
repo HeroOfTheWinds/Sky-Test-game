@@ -1,5 +1,7 @@
 mgparams = {mgname="singlenode"}
-minetest.register_on_mapgen_init(	minetest.set_mapgen_params(mgparams))
+minetest.register_on_mapgen_init(function(mgparams)
+	minetest.set_mapgen_params(mgparams)
+end)
 
 -- 2D noise for wave
 
